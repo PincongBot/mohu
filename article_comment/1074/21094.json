@@ -1,0 +1,1 @@
+{"type":"article_comment","id":21094,"parentType":"article","parentId":1074,"uid":5802,"contents":"<blockquote>对sha有更精甚的理解。但还是不明白怎么用来做身份认证呢？ </blockquote><br>\n你事先选一句话，计算Hash，别人不能通过这个Hash反推出你选的是哪句话，这叫Hash函数的单向性。因为选的那句话只有你知道的缘故，所以可用作身份验证<br>\n为了防止你选的文本被猜出来或者被穷举，可以用软件生成一定长度的随机字节","date":"2020-08-06","agreeCount":2,"discussionCount":0}

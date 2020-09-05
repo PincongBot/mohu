@@ -1,0 +1,1 @@
+{"type":"article_comment","id":21635,"parentType":"article","parentId":1074,"uid":5919,"contents":"<blockquote>求助下膜友们，用Shadowsocks以后怎么配置tor？现在只有梯子，连不上tor，不安全，大号就...</blockquote><br>\n/etc/torrc加一行<br>\n<pre>Socks5Proxy 127.0.0.1:1080</pre>","date":"2020-08-10","agreeCount":0,"discussionCount":0}
