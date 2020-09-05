@@ -1,0 +1,1 @@
+{"type":"answer","id":9680,"parentType":"question","parentId":2187,"uid":1,"contents":"matomo记录的数据只用于统计，不会和登陆的用户信息关联起来。为了安全，我们不敢使用国内的第三方平台，只能自己搭建。<br>\n<br>\n-------------------------------<br>\n<br>\n关于matomo记录用户ip地址的解决方案:<br>\n<br>\n在/core/IP.php中第83行与84行之间加入以下代码<br>\n<br>\n$proxyHeaders = array('REMOTE_ADDR');","date":"2018-08-07","agreeCount":8,"discussionCount":0}

@@ -1,0 +1,1 @@
+{"type":"answer","id":48493,"parentType":"question","parentId":11146,"uid":1438,"contents":"1. 选择与中国政府无关的服务器提供商<br>\n2. 域名必须在国外注册，开启Whois信息保护<br>\n3. 不要使用Windows系统的服务器<br>\n4. 禁止直接登录服务器root用户（防止爆破）<br>\n5. 套好CDN（Cloudflare）<br>\n6. 日常维护必须用Tor（防止被查路由）<br>\n如果只是像膜乎这样的网站，这种级别的防护就够了。","date":"2020-07-22","agreeCount":5,"discussionCount":0}

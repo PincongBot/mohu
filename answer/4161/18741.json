@@ -1,0 +1,1 @@
+{"type":"answer","id":18741,"parentType":"question","parentId":4161,"uid":1087,"contents":"一般的逻辑删除（惰性删除）只是让地址块标记为空闲，实际上东西还在但是无法访问了。<br>\n<br>\n如果要防止数据被跟踪的话需要把那块内存覆盖重写或者清零，具体有各种小工具可以实现，比如360文件粉碎机，Eraser等等。","date":"2018-11-03","agreeCount":0,"discussionCount":0}
