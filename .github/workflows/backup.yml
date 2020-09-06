@@ -1,0 +1,46 @@
+name: Backup
+
+on:
+  workflow_dispatch:
+    inputs: {}
+  schedule:
+    - cron:  0 */6 * * *
+
+env:
+  FILES_DIR: "."
+  SITE_URL: https://mohu.rocks
+  UA: Mozilla/5.0 (rv:79.0) Gecko/20100101 Firefox/79.0
+  CONCURRENCY: 50
+
+jobs:
+  backup:
+
+    runs-on: ubuntu-latest
+  
+    steps:
+    # - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 10
+          path: ${{ env.FILES_DIR }}
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - run: git config --global user.email bot@example.com
+      - run: git config --global user.name bot
+
+      - run: npm install
+
+      - name: main
+        run: npm run backup;
+
+      - name: commit
+        run: |
+          cd $FILES_DIR;
+          git add .;
+          git commit -m "$(date -uI)";
+          git push;
+
