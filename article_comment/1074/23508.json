@@ -1,1 +1,1 @@
-{"type":"article_comment","id":23508,"parentType":"article","parentId":1074,"uid":4516,"contents":"接楼上，可以这么修复，每次修宪加载编辑器内容的时候，把这个字符串<br>\n<pre>\"&lt;mark&gt;<mark>支</mark>&lt;/mark&gt;\"</pre><br>\n一律替换成<br>\n<pre>\"<mark>支</mark>\"</pre>","date":"2020-08-28","agreeCount":3,"discussionCount":0}
+{"type":"article_comment","id":23508,"parentType":"article","parentId":1074,"uid":4516,"contents":"接楼上，可以这么修复，每次修宪加载编辑器内容的时候，把这个字符串<br>\n<pre>\"&lt;mark&gt;支&lt;/mark&gt;\"</pre><br>\n一律替换成<br>\n<pre>\"支\"</pre>","date":"2020-08-28","agreeCount":3,"discussionCount":0}
