@@ -10,7 +10,7 @@ env:
   FILES_DIR: "."
   SITE_URL: https://mohu.rocks
   UA: Mozilla/5.0 (rv:79.0) Gecko/20100101 Firefox/79.0
-  CONCURRENCY: 50
+  CONCURRENCY: 40
 
 jobs:
   backup:
@@ -40,7 +40,9 @@ jobs:
       - name: commit
         run: |
           cd $FILES_DIR;
+          git pull;
           git add .;
           git commit -m "$(date -uI)";
+          git pull;
           git push;
 

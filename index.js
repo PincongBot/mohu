@@ -7,6 +7,7 @@ const options = {
     userAgent: process.env.UA,
     destDir: process.env.FILES_DIR,
     concurrency: +process.env.CONCURRENCY,
+    bypassCloudflare: true,
     progress(item) {
         if (!item.parentType) { // root item
             console.log("📝", item.type, item.id)
