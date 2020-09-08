@@ -15,8 +15,7 @@ const options = {
     }
 }
 
-Backup("user", options)
-Backup("topic", options)
-Backup("article", options)
-Backup("question", options)
-Backup("video", options)
+const startId = +process.env.START_ID || undefined
+const endId = +process.env.END_ID || undefined
+
+Backup(process.env.BACKUP_TYPE, options, startId, endId)

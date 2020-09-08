@@ -16,7 +16,22 @@ jobs:
   backup:
 
     runs-on: ubuntu-latest
-  
+    continue-on-error: ${{ matrix.allow_fail || false }}
+
+    strategy:
+      matrix:
+        backup_type: [user, topic, article, video]
+        include:
+          - { backup_type: question, start_id: 10001, allow_fail: true }
+          - { backup_type: question, start_id: 5001, end_id: 10000 }
+          - { backup_type: question, start_id: 1, end_id: 5000 }
+      fail-fast: false
+
+    env:
+      BACKUP_TYPE: ${{ matrix.backup_type }}
+      START_ID: ${{ matrix.start_id }}
+      END_ID: ${{ matrix.end_id }}
+
     steps:
     # - uses: actions/checkout@v2
       - uses: actions/checkout@v2
