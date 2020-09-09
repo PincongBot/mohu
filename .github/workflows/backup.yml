@@ -20,8 +20,9 @@ jobs:
 
     strategy:
       matrix:
-        backup_type: [user, topic, article, video]
+        backup_type: [user, article, video]
         include:
+          - { backup_type: topic, allow_fail: true }
           - { backup_type: question, start_id: 10001, allow_fail: true }
           - { backup_type: question, start_id: 5001, end_id: 10000 }
           - { backup_type: question, start_id: 1, end_id: 5000 }
