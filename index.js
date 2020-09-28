@@ -8,6 +8,7 @@ const options = {
     destDir: process.env.FILES_DIR,
     concurrency: +process.env.CONCURRENCY,
     bypassCloudflare: true,
+    saveAvatar: true,
     progress(item) {
         if (!item.parentType) { // root item
             console.log("📝", item.type, item.id)
