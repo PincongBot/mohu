@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OUTPUT: IPFS_HASH
-      IPFS_BIN: ./node_modules/.bin/jsipfs
+      JS_IPFS: ./node_modules/.bin/jsipfs
+      GO_IPFS: /tmp/go-ipfs/ipfs
       API: https://ipfs.infura.io:5001/
     steps:
       - uses: actions/checkout@v2
@@ -29,13 +30,17 @@ jobs:
         run: rm $OUTPUT
 
       - run: npm i ipfs
-      - run: $IPFS_BIN init -e
+      - run: |
+          wget https://dist.ipfs.io/go-ipfs/v0.7.0/go-ipfs_v0.7.0_linux-amd64.tar.gz -O /tmp/ipfs.tar.gz;
+          cd /tmp/ && tar -xvf /tmp/ipfs.tar.gz && cd -;
+      - run: $GO_IPFS init -e
+
       - name: ipfs add
         run: |
           ls -I node_modules -I package.json -I package-lock.json -I index.js | xargs -I {} sh -c \
             "echo {}; \
-            $IPFS_BIN add --progress=false -r {} | tee /dev/stderr | tail -1 >> $OUTPUT; \
-            $IPFS_BIN --api $API add --progress=false -r {}"
+            $GO_IPFS add --progress=false -r {} | tee /dev/stderr | tail -1 >> $OUTPUT; \
+            $JS_IPFS --api $API add --progress=false -r {}"
 
       - name: commit ipfs cid
         run: |
@@ -52,5 +57,5 @@ jobs:
 
           for i in {1..50}
           do
-            $IPFS_BIN --api $API pin add $CID_LIST;
+            $JS_IPFS --api $API pin add $CID_LIST;
           done
