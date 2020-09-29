@@ -1,0 +1,40 @@
+name: Upload
+
+on:
+  workflow_dispatch:
+    inputs: {}
+  schedule:
+    - cron:  0 */2 * * *
+
+jobs:
+  npm:
+    name: Upload to NPM
+    runs-on: ubuntu-latest
+    steps:
+      - &checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 1
+      - name: Set package version
+        run: npm version "1.0.0-$(git rev-parse --short HEAD)" --no-git-tag
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}} # 9a4f**********
+  ipfs:
+    name: Upload to IPFS
+    runs-on: ubuntu-latest
+    env:
+      OUTPUT: IPFS_HASH
+    steps:
+      - *checkout
+      - name: Cleanup
+        run: rm index.js package.*
+      - run: sudo npm i -g ipfs
+      - run: |
+          jsipfs --api https://ipfs.infura.io:5001/ add --progress=false -r . \
+            | tee >(tail -1 | cut -d' ' -f2 > $OUTPUT)
+      - run: |
+          git add $OUTPUT;
+          git commit -m "ipfs://$(cat $OUTPUT)";
+          git push;
