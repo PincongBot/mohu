@@ -20,9 +20,10 @@ jobs:
           node-version: 12
       - name: Set package version
         run: npm version "1.0.0-$(git rev-parse --short HEAD)" --no-git-tag
+      - run: npm remove wecenter-backup-helper
       - run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # 9a4f**********
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # e866**********
 
   ipfs:
     name: Upload to IPFS
@@ -49,7 +50,7 @@ jobs:
       - name: ipfs add
         run: |
           ls | xargs -I {} sh -c \
-            "echo {}; $IPFS_BIN --api $API add --progress=false -r {} | tee /dev/tty | tail -1 >> $OUTPUT""
+            "echo {}; $IPFS_BIN --api $API add --progress=false -r {} | tee /dev/tty | tail -1 >> $OUTPUT"
 
       - name: commit ipfs cid
         run: |
