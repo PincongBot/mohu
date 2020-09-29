@@ -7,24 +7,6 @@ on:
     - cron:  0 */2 * * *
 
 jobs:
-  npm:
-    name: Upload to NPM
-    if: ${{ false }} # 415 - Too many files.
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-node@v1
-        with:
-          registry-url: 'https://registry.npmjs.org'  # IMPORTANT!
-          node-version: 12
-      - name: Set package version
-        run: npm version "1.0.0-$(git rev-parse --short HEAD)" --no-git-tag
-      - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # e866**********
-
   ipfs:
     name: Upload to IPFS
     runs-on: ubuntu-latest
@@ -50,7 +32,9 @@ jobs:
       - name: ipfs add
         run: |
           ls -I node_modules -I package.json -I package-lock.json -I index.js | xargs -I {} sh -c \
-            "echo {}; $IPFS_BIN --api $API add --progress=false -r {} | tee /dev/stderr | tail -1 >> $OUTPUT"
+            "echo {}; \
+            $IPFS_BIN add --progress=false -n -r {} | tail -1 >> $OUTPUT; \
+            $IPFS_BIN --api $API add --progress=false -r {}"
 
       - name: commit ipfs cid
         run: |
