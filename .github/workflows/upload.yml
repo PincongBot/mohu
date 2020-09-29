@@ -29,6 +29,7 @@ jobs:
         run: rm $OUTPUT
 
       - run: npm i ipfs
+      - run: $IPFS_BIN init -e
       - name: ipfs add
         run: |
           ls -I node_modules -I package.json -I package-lock.json -I index.js | xargs -I {} sh -c \
