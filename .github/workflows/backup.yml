@@ -53,8 +53,6 @@ jobs:
       - name: main
         run: npm run backup;
 
-      - run: mv imo img || true
-
       - name: commit
         run: |
           cd $FILES_DIR;
