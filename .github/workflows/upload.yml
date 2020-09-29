@@ -34,8 +34,11 @@ jobs:
         run: |
           ls -I node_modules -I package.json -I package-lock.json -I index.js | xargs -I {} sh -c \
             "echo {}; \
-            $IPFS_BIN add --progress=false -n -r {} | tail -1 >> $OUTPUT; \
+            $IPFS_BIN add --progress=false -r {} | tail -1 >> $OUTPUT; \
             $IPFS_BIN --api $API add --progress=false -r {}"
+
+      - name: Final IPFS CID
+        run: $IPFS_BIN add -Q -r . >> $OUTPUT
 
       - name: commit ipfs cid
         run: |
@@ -44,3 +47,13 @@ jobs:
           git commit -m "ipfs hash";
           git pull;
           git push;
+
+      - name: Sync
+        run: |
+          CID=$(tail -1 $OUTPUT);
+          echo $CID;
+
+          for i in {1..50}
+          do
+            $IPFS_BIN --api $API pin add $CID;
+          done
