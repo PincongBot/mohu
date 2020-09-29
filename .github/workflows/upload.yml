@@ -34,6 +34,9 @@ jobs:
           wget https://dist.ipfs.io/go-ipfs/v0.7.0/go-ipfs_v0.7.0_linux-amd64.tar.gz -O /tmp/ipfs.tar.gz;
           cd /tmp/ && tar -xvf /tmp/ipfs.tar.gz && cd -;
       - run: $GO_IPFS init -e
+
+      - name: ipfs daemon
+        run: $GO_IPFS daemon &; sleep 5
       - run: $GO_IPFS id
 
       - name: ipfs add
