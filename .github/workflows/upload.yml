@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 1
       - name: Set package version
         run: npm version "1.0.0-$(git rev-parse --short HEAD)" --no-git-tag
-      - run: npm publish --access public
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}} # 9a4f**********
   ipfs:
@@ -30,11 +30,15 @@ jobs:
           fetch-depth: 1
       - name: Cleanup
         run: rm index.js package.*
-      - run: sudo npm i -g ipfs
-      - run: |
-          jsipfs --api https://ipfs.infura.io:5001/ add --progress=false -r . \
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: ipfs add
+        run: |
+          npx jsipfs --api https://ipfs.infura.io:5001/ add --progress=false -r . \
             | tee >(tail -1 | cut -d' ' -f2 > $OUTPUT)
-      - run: |
+      - name: commit ipfs cid
+        run: |
           git add $OUTPUT;
           git commit -m "ipfs://$(cat $OUTPUT)";
           git push;
