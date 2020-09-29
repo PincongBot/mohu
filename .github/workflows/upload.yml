@@ -37,9 +37,6 @@ jobs:
             $IPFS_BIN add --progress=false -r {} | tail -1 >> $OUTPUT; \
             $IPFS_BIN --api $API add --progress=false -r {}"
 
-      - name: Final IPFS CID
-        run: $IPFS_BIN add -Q -r . >> $OUTPUT
-
       - name: commit ipfs cid
         run: |
           git pull;
@@ -50,10 +47,10 @@ jobs:
 
       - name: Sync
         run: |
-          CID=$(tail -1 $OUTPUT);
-          echo $CID;
+          CID_LIST=$(cut -d' ' -f2 $OUTPUT);
+          echo $CID_LIST;
 
           for i in {1..50}
           do
-            $IPFS_BIN --api $API pin add $CID;
+            $IPFS_BIN --api $API pin add $CID_LIST;
           done
