@@ -48,7 +48,7 @@ jobs:
       - run: npm i ipfs
       - name: ipfs add
         run: |
-          ls -I node_modules -I package* -I *.js | xargs -I {} sh -c \
+          ls -I node_modules -I package.json -I package-lock.json -I index.js | xargs -I {} sh -c \
             "echo {}; $IPFS_BIN --api $API add --progress=false -r {} | tee /dev/stderr | tail -1 >> $OUTPUT"
 
       - name: commit ipfs cid
