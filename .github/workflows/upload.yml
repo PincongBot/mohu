@@ -48,6 +48,7 @@ jobs:
             $JS_IPFS --api $API add --progress=false -r {}"
 
       - name: commit ipfs cid
+        continue-on-error: true
         run: |
           git pull;
           git add $OUTPUT;
