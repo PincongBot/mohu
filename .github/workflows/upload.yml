@@ -34,7 +34,7 @@ jobs:
         run: |
           ls -I node_modules -I package.json -I package-lock.json -I index.js | xargs -I {} sh -c \
             "echo {}; \
-            $IPFS_BIN add --progress=false -r {} | tail -1 >> $OUTPUT; \
+            $IPFS_BIN add --progress=false -r {} | tee /dev/stderr | tail -1 >> $OUTPUT; \
             $IPFS_BIN --api $API add --progress=false -r {}"
 
       - name: commit ipfs cid
