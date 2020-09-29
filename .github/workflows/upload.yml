@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v1
         with:
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: 'https://registry.npmjs.org'  # IMPORTANT!
           node-version: 12
       - name: Set package version
         run: npm version "1.0.0-$(git rev-parse --short HEAD)" --no-git-tag
