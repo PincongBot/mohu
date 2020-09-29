@@ -16,6 +16,7 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v1
         with:
+          registry-url: https://skimdb.npmjs.com/registry
           node-version: 12
       - name: Set package version
         run: npm version "1.0.0-$(git rev-parse --short HEAD)" --no-git-tag
@@ -48,7 +49,7 @@ jobs:
       - name: ipfs add
         run: |
           ls | xargs -I {} sh -c \
-            "echo {}; $IPFS_BIN --api $API add --progress=false -r {} | tee >(tail -1 >> $OUTPUT)"
+            "echo {}; $IPFS_BIN --api $API add --progress=false -r {} | tee /dev/tty | tail -1 >> $OUTPUT""
 
       - name: commit ipfs cid
         run: |
