@@ -28,8 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OUTPUT: IPFS_HASH
+      IPFS_BIN: ./node_modules/.bin/jsipfs
       API: https://ipfs.infura.io:5001/
-
     steps:
       - uses: actions/checkout@v2
         with:
@@ -44,11 +44,11 @@ jobs:
       - name: Cleanup
         run: rm index.js package.* $OUTPUT
 
-      - run: sudo npm i -g ipfs
+      - run: npm i ipfs
       - name: ipfs add
         run: |
           ls | xargs -I {} sh -c \
-            "echo {}; jsipfs --api $API add --progress=false -r {} | tee >(tail -1 >> $OUTPUT)"
+            "echo {}; $IPFS_BIN --api $API add --progress=false -r {} | tee >(tail -1 >> $OUTPUT)"
 
       - name: commit ipfs cid
         run: |
