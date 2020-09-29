@@ -9,6 +9,7 @@ on:
 jobs:
   npm:
     name: Upload to NPM
+    if: ${{ false }} # 415 - Too many files.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
