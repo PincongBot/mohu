@@ -27,7 +27,7 @@ jobs:
       - run: git config --global user.name bot
 
       - name: Cleanup
-        run: rm $OUTPUT
+        run: rm $OUTPUT || true
 
       - run: npm i ipfs
       - run: |
@@ -52,11 +52,12 @@ jobs:
           git push;
 
       - name: Sync
+        continue-on-error: true
         run: |
           CID_LIST=$(cut -d' ' -f2 $OUTPUT);
           echo $CID_LIST;
 
           for i in {1..50}
           do
-            $JS_IPFS --api $API pin add $CID_LIST;
+            $JS_IPFS --api $API pin add $CID_LIST || true;
           done
