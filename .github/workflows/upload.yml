@@ -11,10 +11,8 @@ jobs:
     name: Upload to NPM
     runs-on: ubuntu-latest
     steps:
-      - &checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
-          ref: master
           fetch-depth: 1
       - name: Set package version
         run: npm version "1.0.0-$(git rev-parse --short HEAD)" --no-git-tag
@@ -27,7 +25,9 @@ jobs:
     env:
       OUTPUT: IPFS_HASH
     steps:
-      - *checkout
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
       - name: Cleanup
         run: rm index.js package.*
       - run: sudo npm i -g ipfs
