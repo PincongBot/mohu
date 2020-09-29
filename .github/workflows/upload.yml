@@ -16,10 +16,10 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v1
         with:
+          registry-url: 'https://registry.npmjs.org'
           node-version: 12
       - name: Set package version
         run: npm version "1.0.0-$(git rev-parse --short HEAD)" --no-git-tag
-      - run: npm remove wecenter-backup-helper
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # e866**********
@@ -43,16 +43,18 @@ jobs:
       - run: git config --global user.name bot
 
       - name: Cleanup
-        run: rm index.js package.* $OUTPUT
+        run: rm $OUTPUT
 
       - run: npm i ipfs
       - name: ipfs add
         run: |
-          ls | xargs -I {} sh -c \
+          ls -I node_modules -I package* -I *.js | xargs -I {} sh -c \
             "echo {}; $IPFS_BIN --api $API add --progress=false -r {} | tee /dev/stderr | tail -1 >> $OUTPUT"
 
       - name: commit ipfs cid
         run: |
+          git pull;
           git add $OUTPUT;
           git commit -m "ipfs hash";
+          git pull;
           git push;
