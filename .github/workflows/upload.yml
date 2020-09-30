@@ -41,6 +41,7 @@ jobs:
       - run: $GO_IPFS id
 
       - name: ipfs add
+        continue-on-error: true
         run: |
           ls -I node_modules -I package.json -I package-lock.json -I index.js | xargs -I {} sh -c \
             "echo {}; \
@@ -62,7 +63,9 @@ jobs:
           CID_LIST=$(cut -d' ' -f2 $OUTPUT);
           echo $CID_LIST;
 
-          for i in {1..50}
+          for CID in $CID_LIST
           do
-            $JS_IPFS --api $API pin add $CID_LIST || true;
+              echo /ipfs/$CID;
+              $GO_IPFS block get $CID | $JS_IPFS --api $API block put;
+              $JS_IPFS --api $API pin add $CID || true;
           done
