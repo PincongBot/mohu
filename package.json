@@ -1,7 +1,7 @@
 {
   "name": "new-mohu-backup",
   "dependencies": {
-    "wecenter-backup-helper": "git+https://github.com/Xmader/wecenter-backup-helper.git#master"
+    "wecenter-backup-helper": "git+https://github.com/Xmader/wecenter-backup-helper.git#1.1.0"
   },
   "scripts": {
     "backup": "node index.js"
