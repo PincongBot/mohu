@@ -66,6 +66,6 @@ jobs:
           for CID in $CID_LIST
           do
               echo /ipfs/$CID;
-              $GO_IPFS block get $CID | $JS_IPFS --api $API block put;
+              $GO_IPFS block get $CID | $JS_IPFS --api $API block put -f v0 --pin;
               $JS_IPFS --api $API pin add $CID || true;
           done
